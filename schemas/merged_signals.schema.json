@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TianxiaOS Merged Signal Wire Contract (MERGED_SIGNALS.jsonl)",
+  "type": "object",
+  "required": ["source", "kind", "title", "url", "ts"],
+  "properties": {
+    "source": { "type": "string" },
+    "subsource": { "type": "string" },
+    "kind": { "type": "string" },
+    "title": { "type": "string" },
+    "text": { "type": "string" },
+    "url": { "type": "string" },
+    "score": { "type": "number" },
+    "ts": { "type": "number" }
+  }
+}

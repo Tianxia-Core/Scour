@@ -1,0 +1,35 @@
+# ffp: FFP-CI-SCOUR-MINER content-pipeline yaml
+name: Scour Tier-3 Organism Gate
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+
+
+
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  scour-miner-verify:
+    name: DSS-14.2 FFP, SecretShield & CLI Contract Verification
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dhūmāvatī SecretShield & Zero-Scraper Check
+        run: |
+          python3 security/secret_shield.py
+          ! grep -rnE "(mailto:|@rasaxmachina\.com|\+372|sk_live_|ghp_[A-Za-z0-9]{20})" src/ nix/ schemas/ README.md SECURITY.md
+      - name: Verify Python Syntax & CLI Entrypoints
+        run: |
+          python3 -m py_compile src/*.py security/secret_shield.py
+          python3 src/tx_scour.py --help
+          python3 src/tx_tyrawn_scour.py --help || true
